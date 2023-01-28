@@ -1,0 +1,27 @@
+name: ZombieApocalypse
+version: '${project.version}'
+main: kr.co.skeleton.zombieapocalypse.Main
+api-version: 1.16
+authors: [ skeleton2010 ]
+description: Zombie Apocalypse plugin
+depend: [ ProtocolLib ]
+commands:
+  text:
+  boom:
+  speed:
+  slow:
+  jump:
+  invisible:
+  split:
+  vaccine:
+  add:
+  load:
+  loaddot:
+  dev:
+  disable:
+  test:
+  wow:
+  target:
+  bug:
+config:
+  DataManager:
