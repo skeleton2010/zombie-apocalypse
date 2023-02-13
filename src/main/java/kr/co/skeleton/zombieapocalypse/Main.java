@@ -70,7 +70,7 @@ public final class Main extends JavaPlugin implements Listener {
     public void onDisable() {
         System.out.println("[ZombieApocalypse] plugin Disabled");
     }
-//
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         Player p = (Player) sender;

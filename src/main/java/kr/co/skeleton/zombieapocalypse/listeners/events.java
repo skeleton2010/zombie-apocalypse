@@ -17,7 +17,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.util.Vector;
@@ -36,7 +35,6 @@ public class events implements Listener {
         String name = p.getName();
         PlayerZombie.addScoreboardTag(name);
         LivingEntity livingEntity = (LivingEntity) PlayerZombie;
-        Bukkit.broadcastMessage(name);
         livingEntity.setCustomName(name);
         livingEntity.setCustomNameVisible(true);
         ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
@@ -44,12 +42,22 @@ public class events implements Listener {
         skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(name));
         skull.setItemMeta(skullMeta);
         livingEntity.getEquipment().setHelmet(skull);
-        p.teleport(PlayerZombie.getLocation());
+        p.setBedSpawnLocation(l);
     }
 
 //    @EventHandler
 //    public  void onPlayerDeath(PlayerRespawnEvent e) {
 //        Player p = e.getPlayer();
+//        Object Tags = p.getScoreboardTags();
+//        for (World world : Bukkit.getWorlds()) {
+//            for (Entity entity : world.getEntities()) {
+//                Object entityTags = entity.getScoreboardTags();
+//                if (Tags.equals(entityTags)) {
+//                    Location entityLoc = entity.getLocation();
+//                    p.teleport(entityLoc);
+//                }
+//            }
+//        }
 //        Location l = p.getLocation();
 //        Entity PlayerZombie = e.getPlayer().getWorld().spawnEntity(l, EntityType.ZOMBIE);
 //        p.setGameMode(GameMode.SPECTATOR);
@@ -151,7 +159,7 @@ public class events implements Listener {
                 } else {
                     EntityType targetEntityType = targetEntity.getType();
                     Object[] EntityTags = targetEntity.getScoreboardTags().toArray();
-                    Player player = Bukkit.getPlayer((String) EntityTags[0]);
+                        Player player = Bukkit.getPlayer((String) EntityTags[0]);
                     if (targetEntityType.equals(EntityType.ZOMBIE)) {
                         if (players.contains(EntityTags[0])) {
                             if (player != null) {
@@ -205,12 +213,12 @@ public class events implements Listener {
         }
     }
 
-//    @EventHandler
-//    public void onSpawn(EntitySpawnEvent e) {
-//        if (!(e.getEntity() instanceof Monster)) return;
-//        EntityType entityType = e.getEntity().getType();
-//        if (e.getLocation().getBlock().isLiquid()) return;
-//        if (!entityType.equals(EntityType.ZOMBIE)) e.setCancelled(true);
+    @EventHandler
+    public void onSpawn(EntitySpawnEvent e) {
+        if (!(e.getEntity() instanceof Monster)) return;
+        EntityType entityType = e.getEntity().getType();
+        if (e.getLocation().getBlock().isLiquid()) return;
+        if (!entityType.equals(EntityType.ZOMBIE)) e.setCancelled(true);
 //        if (e.getLocation().getBlock().getType().isAir()) {
 //            if ((int) (Math.random() * 50) == 1) {
 //                e.setCancelled(true);
@@ -219,11 +227,9 @@ public class events implements Listener {
 //                world.addEntity(pack);
 //
 //                Bukkit.broadcastMessage("" + e.getLocation());
-//                Player player = (Player) Bukkit.getServer().getOnlinePlayers();
-//                player.teleport(e.getLocation());
 //            }
 //        }
-//    }
+    }
 
 //    @EventHandler
 //    public void BlockPlace(BlockPlaceEvent e) {
